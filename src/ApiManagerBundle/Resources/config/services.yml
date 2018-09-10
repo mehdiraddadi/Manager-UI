@@ -1,0 +1,42 @@
+services:
+#    api_manager.example:
+#        class: ApiManagerBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    api_manager.user_manager:
+        class: ApiManagerBundle\ModelManager\UserModelManager
+        arguments:
+        - '@doctrine'
+
+    api_manager.commercial.form.handler:
+        class: ApiManagerBundle\Form\Handler\CommercialFormHandler
+        scope: request
+        arguments:
+            - "@api_manager.commercial.form"
+
+    api_manager.commercial.form:
+        class: Symfony\Component\Form\Form
+        factory: 'form.factory:createNamed'
+        arguments:
+            - "commercial"
+            - ApiManagerBundle\Form\Type\RegistrationFormType
+            - null
+
+
+    api_manager.generic.login.handler:
+        class: ApiManagerBundle\Form\Handler\LoginFormHandler
+        scope: request
+        arguments:
+        - "@api_manager.generic.login.form"
+        - "@api_manager.user_manager"
+        - "@security.password_encoder"
+        - "@lexik_jwt_authentication.encoder"
+
+    api_manager.generic.login.form:
+        class: Symfony\Component\Form\Form
+        factory: 'form.factory:createNamed'
+        arguments:
+        - "account"
+        - ApiManagerBundle\Form\Type\LoginFormType
+        - null
+

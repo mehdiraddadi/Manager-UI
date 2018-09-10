@@ -1,0 +1,6 @@
+api_manager_register:
+    path:  /manager/register
+    defaults: { _controller: ApiManagerBundle:Commercial:postManager }
+    methods: [POST]
+    requirements:
+        _format:  json

@@ -1,0 +1,6 @@
+api_manager.user_login:
+    path:  /login
+    defaults: { _controller: ApiManagerBundle:ApiUser:login }
+    methods: [POST]
+    requirements:
+        _format:  json

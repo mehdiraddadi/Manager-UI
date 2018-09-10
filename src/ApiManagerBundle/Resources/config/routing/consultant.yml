@@ -1,0 +1,6 @@
+api_manager_register:
+  path:  /consultant/register
+  defaults: { _controller: ApiManagerBundle:Consultant:postConsultant }
+  methods: [POST]
+  requirements:
+    _format:  json
