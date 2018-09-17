@@ -22,6 +22,7 @@ services:
             - ApiManagerBundle\Form\Type\RegistrationFormType
             - null
 
+# configuration login form handler
 
     api_manager.generic.login.handler:
         class: ApiManagerBundle\Form\Handler\LoginFormHandler
@@ -31,6 +32,7 @@ services:
         - "@api_manager.user_manager"
         - "@security.password_encoder"
         - "@lexik_jwt_authentication.encoder"
+        - "@jms_serializer"
 
     api_manager.generic.login.form:
         class: Symfony\Component\Form\Form
@@ -39,4 +41,25 @@ services:
         - "account"
         - ApiManagerBundle\Form\Type\LoginFormType
         - null
+
+# configuration check logged handler
+
+    api_manager.is_logged.form:
+        class: Symfony\Component\Form\Form
+        factory: 'form.factory:createNamed'
+        arguments:
+        - "account"
+        - ApiManagerBundle\Form\Type\CheckLoggedFormType
+        - null
+
+    api_manager.is_logged.handler:
+        class: ApiManagerBundle\Form\Handler\CheckLoggedHandler
+        scope: request
+        arguments:
+            - "@api_manager.is_logged.form"
+            - "@lexik_jwt_authentication.encoder"
+            - "@api_manager.user_manager"
+
+
+
 

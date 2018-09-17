@@ -4,3 +4,10 @@ api_manager.user_login:
     methods: [POST]
     requirements:
         _format:  json
+
+api_manager.user_is_logged:
+    path:  /check_login
+    defaults: { _controller: ApiManagerBundle:ApiUser:isAuthentificated }
+    methods: [POST]
+    requirements:
+        _format:  json

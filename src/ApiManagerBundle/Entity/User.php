@@ -4,11 +4,13 @@ namespace ApiManagerBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class User
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @JMS\ExclusionPolicy("all")
  */
 class User extends BaseUser
 {
@@ -16,21 +18,41 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Expose
+     * @JMS\Type("string")
      */
     protected $id;
 
     /**
+     * @JMS\Expose
+     * @JMS\Type("string")
+     */
+    protected $username;
+
+    /**
+     * @var string The email of the user.
+     *
+     * @JMS\Expose
+     * @JMS\Type("string")
+     */
+    protected $email;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
+     * @JMS\Expose
      */
     protected $firstname;
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @JMS\Expose
      */
     protected $lastname;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
+     * @JMS\Expose
+     * @JMS\Type("string")
      */
     protected $token;
 

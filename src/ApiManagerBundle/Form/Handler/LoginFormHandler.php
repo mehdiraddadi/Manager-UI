@@ -27,10 +27,11 @@ class LoginFormHandler
     protected $securityPasswordEncoder;
 
     /**
-     * @var LcobucciJWTEncoder 
+     * @var LcobucciJWTEncoder
      */
     protected $jwtEncoder;
 
+    protected $serializer;
     /**
      * LoginFormHandler constructor.
      * @param FormInterface $form
@@ -41,13 +42,14 @@ class LoginFormHandler
     public function __construct(FormInterface $form,
                                 UserModelManager $userModelManager,
                                 UserPasswordEncoder $securityPasswordEncoder,
-                                LcobucciJWTEncoder $jwtEncoder)
+                                LcobucciJWTEncoder $jwtEncoder,
+                                $serializer)
     {
         $this->userModelManager = $userModelManager;
         $this->form = $form;
         $this->securityPasswordEncoder = $securityPasswordEncoder;
         $this->jwtEncoder = $jwtEncoder;
-
+        $this->serializer = $serializer;
     }
 
     /**
@@ -78,10 +80,9 @@ class LoginFormHandler
                 ]);
 
             $user->setToken($token);
+            $this->userModelManager->update($user);
         } else {
-            throw new NotFoundHttpException($this->getErrorMessages($this->form));
-            $this->getErrorMessages($this->form);
-            return false;
+            return $this->getErrorMessages($this->form);
         }
 
         return $user;

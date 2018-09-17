@@ -4,6 +4,7 @@ namespace ApiManagerBundle\ModelManager;
 
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use ApiManagerBundle\Entity\User;
 
 class UserModelManager
 {
@@ -40,5 +41,14 @@ class UserModelManager
         }
 
         return $user;
+    }
+
+    /**
+     * @param User $userss
+     */
+    public function update(User $user)
+    {
+        $entityMnager = $this->doctrine->getManager();
+        $entityMnager->flush();
     }
 }

@@ -25,13 +25,19 @@ class ApiUserController extends Controller
         return $this->get('fos_rest.view_handler')->handle($view);
     }
 
-    public function registerAction()
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function isAuthentificatedAction(Request $request)
     {
-        return new Response('register from api');
-    }
+        $handlerLogin = $this->get('api_manager.is_logged.handler');
+        $isLogged = $handlerLogin->isLogged($request);
 
-    public function isAuthentificated(Request $request)
-    {
+        $view = View::create()
+            ->setStatusCode(200)
+            ->setData($isLogged);
 
+        return $this->get('fos_rest.view_handler')->handle($view);
     }
 }
