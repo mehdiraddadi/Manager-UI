@@ -57,6 +57,12 @@ class User extends BaseUser
     protected $token;
 
     /**
+     * @JMS\Expose
+     * @JMS\Type("collection")
+     */
+    protected $roles;
+
+    /**
      * User constructor.
      */
     public function __construct()
